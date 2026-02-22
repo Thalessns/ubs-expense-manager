@@ -2,7 +2,7 @@ package dev.java21.UbsExpenseManager.controllers;
 
 import dev.java21.UbsExpenseManager.dtos.funcionario.FuncionarioRequest;
 import dev.java21.UbsExpenseManager.dtos.funcionario.FuncionarioResponse;
-import dev.java21.UbsExpenseManager.services.FuncionarioService;
+import dev.java21.UbsExpenseManager.interfaces.funcionario.IFuncionarioService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +11,9 @@ import java.util.List;
 @RequestMapping("funcionarios/")
 public class FuncionarioController {
 
-    private final FuncionarioService service;
+    private final IFuncionarioService service;
 
-    public FuncionarioController(FuncionarioService service) {
+    public FuncionarioController(IFuncionarioService service) {
         this.service = service;
     }
 

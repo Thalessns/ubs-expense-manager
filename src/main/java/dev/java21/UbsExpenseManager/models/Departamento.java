@@ -27,19 +27,19 @@ public class Departamento {
         this.dataCriacao = dataCriacao;
     }
 
-    public UUID getId() {
+    public UUID id() {
         return id;
     }
 
-    public String getNome() {
+    public String nome() {
         return nome;
     }
 
-    public BigDecimal getOrcamentoMensal() {
+    public BigDecimal orcamentoMensal() {
         return orcamentoMensal;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public LocalDateTime dataCriacao() {
             return dataCriacao;
     }
 }

@@ -2,23 +2,27 @@ package dev.java21.UbsExpenseManager.services;
 
 import dev.java21.UbsExpenseManager.dtos.funcionario.FuncionarioRequest;
 import dev.java21.UbsExpenseManager.dtos.funcionario.FuncionarioResponse;
+import dev.java21.UbsExpenseManager.exceptions.ResourceNotFoundException;
+import dev.java21.UbsExpenseManager.interfaces.funcionario.IFuncionarioRepository;
+import dev.java21.UbsExpenseManager.interfaces.funcionario.IFuncionarioService;
+import dev.java21.UbsExpenseManager.interfaces.utils.IUtilsService;
 import dev.java21.UbsExpenseManager.models.Funcionario;
-import dev.java21.UbsExpenseManager.repositorys.FuncionarioRepository;
+
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Service
-public class FuncionarioService {
+public class FuncionarioService implements IFuncionarioService{
 
-    private final FuncionarioRepository repository;
+    private final IFuncionarioRepository repository;
+    public final IUtilsService utils;
 
-    public FuncionarioService(FuncionarioRepository repository) {
+    public FuncionarioService(IFuncionarioRepository repository, IUtilsService utils) {
         this.repository = repository;
+        this.utils = utils;
     }
 
     public FuncionarioResponse createFuncionario(FuncionarioRequest funcionarioRequest) {
@@ -29,19 +33,26 @@ public class FuncionarioService {
                 funcionarioRequest.cargo(),
                 funcionarioRequest.departamentoID(),
                 funcionarioRequest.gestorId(),
-                LocalDateTime.now(ZoneId.of("America/Sao_Paulo"))
+                utils.getLocalDateTime()
         );
-        repository.save(funcionario);
-        return toFuncionarioResponse(funcionario);
+        return toFuncionarioResponse(repository.createFuncionario(funcionario));
     }
 
     public List<FuncionarioResponse> getAll(){
-        List<Funcionario> rows = repository.findAll();
+        List<Funcionario> rows = repository.getAllFuncionarios();
         List<FuncionarioResponse> funcionarios = new ArrayList<>();
         for (Funcionario row : rows) {
             funcionarios.add(toFuncionarioResponse(row));
         }
         return funcionarios;
+    }
+
+    public FuncionarioResponse getFuncionarioById(UUID id){
+        var row =  repository.getFuncionarioById(id);
+        if (row == null){
+            throw new ResourceNotFoundException("Funcionario with id '" + id + "' was not found.");
+        }
+        return toFuncionarioResponse(row);
     }
 
     public FuncionarioResponse toFuncionarioResponse(Funcionario funcionario){
@@ -55,5 +66,4 @@ public class FuncionarioService {
                 funcionario.getDataCriacao()
         );
     }
-
 }

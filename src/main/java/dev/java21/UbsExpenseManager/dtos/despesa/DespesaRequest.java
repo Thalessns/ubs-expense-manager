@@ -1,7 +1,6 @@
 package dev.java21.UbsExpenseManager.dtos.despesa;
 
 import dev.java21.UbsExpenseManager.enums.DespesaCategoria;
-import dev.java21.UbsExpenseManager.enums.DespesaStatus;
 import dev.java21.UbsExpenseManager.enums.Moeda;
 
 import java.math.BigDecimal;
