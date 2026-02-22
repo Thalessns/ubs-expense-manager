@@ -2,7 +2,6 @@ package dev.java21.UbsExpenseManager.services;
 
 import dev.java21.UbsExpenseManager.dtos.departamento.DepartamentoRequest;
 import dev.java21.UbsExpenseManager.dtos.departamento.DepartamentoResponse;
-import dev.java21.UbsExpenseManager.exceptions.ResourceNotFoundException;
 import dev.java21.UbsExpenseManager.interfaces.departamento.IDepartamentoRepository;
 import dev.java21.UbsExpenseManager.interfaces.departamento.IDepartamentoService;
 import dev.java21.UbsExpenseManager.interfaces.utils.IUtilsService;
@@ -44,11 +43,7 @@ public class DepartamentoService implements IDepartamentoService {
     }
 
     public DepartamentoResponse getDepartamentoById(UUID id){
-        var row = repository.getDepartamentoById(id);
-        if (row == null){
-            throw new ResourceNotFoundException("Departamento with id '" + id + "' was not found.");
-        }
-        return toDepartamentoResponse(row);
+        return toDepartamentoResponse(repository.getDepartamentoById(id));
     }
 
     public DepartamentoResponse toDepartamentoResponse(Departamento departamento){

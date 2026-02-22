@@ -1,5 +1,6 @@
 package dev.java21.UbsExpenseManager.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -9,13 +10,17 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name="departamento")
+@Table(name="departamentos")
 public class Departamento {
 
     @Id
+    @Column(nullable = false, unique = true, length = 36)
     private UUID id;
+    @Column(nullable = false, length = 50)
     private String nome;
+    @Column(nullable = false)
     private BigDecimal orcamentoMensal;
+    @Column(nullable = false)
     private LocalDateTime dataCriacao;
 
     public Departamento() {}

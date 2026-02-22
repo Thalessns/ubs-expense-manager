@@ -3,6 +3,7 @@ package dev.java21.UbsExpenseManager.repositorys;
 import java.util.List;
 import java.util.UUID;
 
+import dev.java21.UbsExpenseManager.exceptions.ResourceNotFoundException;
 import dev.java21.UbsExpenseManager.interfaces.funcionario.IFuncionarioJpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -28,7 +29,11 @@ public class FuncionarioRepository implements IFuncionarioRepository{
     }
 
     public Funcionario getFuncionarioById(UUID id) {
-        return this.jpaRepo.findById(id).orElse(null);
+        var row = this.jpaRepo.findById(id).orElse(null);
+        if (row == null){
+            throw new ResourceNotFoundException("Funcionario with id '" + id + "' was not found.");
+        }
+        return row;
     }
 
 }

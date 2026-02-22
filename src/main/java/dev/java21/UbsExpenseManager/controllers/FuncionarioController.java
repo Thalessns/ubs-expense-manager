@@ -1,5 +1,7 @@
 package dev.java21.UbsExpenseManager.controllers;
 
+import jakarta.validation.Valid;
+
 import dev.java21.UbsExpenseManager.dtos.funcionario.FuncionarioRequest;
 import dev.java21.UbsExpenseManager.dtos.funcionario.FuncionarioResponse;
 import dev.java21.UbsExpenseManager.interfaces.funcionario.IFuncionarioService;
@@ -18,7 +20,7 @@ public class FuncionarioController {
     }
 
     @PostMapping("/")
-    public FuncionarioResponse create(@RequestBody FuncionarioRequest funcionarioRequest){
+    public FuncionarioResponse create(@Valid @RequestBody FuncionarioRequest funcionarioRequest){
         return service.createFuncionario(funcionarioRequest);
     }
 

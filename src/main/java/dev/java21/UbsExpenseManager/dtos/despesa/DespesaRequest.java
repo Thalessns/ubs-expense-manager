@@ -1,18 +1,26 @@
 package dev.java21.UbsExpenseManager.dtos.despesa;
 
-import dev.java21.UbsExpenseManager.enums.DespesaCategoria;
-import dev.java21.UbsExpenseManager.enums.Moeda;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record DespesaRequest(
+        @NotNull
         UUID funcionarioId,
-        DespesaCategoria categoria,
+        @NotNull
+        @Pattern(regexp = "Viagem|Refeicao|Transporte|Outros")
+        String categoria,
+        @DecimalMin("0.01")
         BigDecimal valor,
-        Moeda moeda,
+        @NotNull
+        @Pattern(regexp = "BRL|USD|EUR")
+        String moeda,
+        @NotNull
+        @Size(min = 0, max = 100)
         String descricao,
+        @NotNull
         LocalDateTime data
 ) {
 }

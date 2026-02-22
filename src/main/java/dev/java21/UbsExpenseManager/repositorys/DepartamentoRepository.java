@@ -1,5 +1,6 @@
 package dev.java21.UbsExpenseManager.repositorys;
 
+import dev.java21.UbsExpenseManager.exceptions.ResourceNotFoundException;
 import dev.java21.UbsExpenseManager.interfaces.departamento.IDepartamentoJpaRepository;
 import dev.java21.UbsExpenseManager.interfaces.departamento.IDepartamentoRepository;
 import dev.java21.UbsExpenseManager.models.Departamento;
@@ -26,6 +27,10 @@ public class DepartamentoRepository implements IDepartamentoRepository {
     }
 
     public Departamento getDepartamentoById(UUID id) {
-        return jpaRepo.findById(id).orElse(null);
+        var row = jpaRepo.findById(id).orElse(null);
+        if (row == null){
+            throw new ResourceNotFoundException("Departamento with id '" + id + "' was not found.");
+        }
+        return row;
     }
 }
